@@ -3,10 +3,17 @@ import re
 import urllib
 from bs4 import BeautifulSoup
 import csv
-
+import import_url
 #web scraping
 
-urlHandle = urllib.urlopen("http://www.basketball-reference.com/teams/?lid=front_qi_teams")
+'''
+#check the dictionary works
+print(import_url.urlDic)
+'''
+#to get the url of the teams page
+urlTeam = import_url.urlStarting+import_url.urlDic["teams"]
+
+urlHandle = urllib.urlopen(urlTeam)
 html = urlHandle.read()
 soup = BeautifulSoup(html,"html.parser")
 
@@ -18,9 +25,11 @@ for tr in trAll:
 
 
 #writer the word data into the csv file
+
 with open("team.csv","w") as fp:
 	team_info = csv.writer(fp,delimiter = ",")
 	team_info.writerows(team_data)
+
 
 
 
