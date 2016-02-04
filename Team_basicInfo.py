@@ -10,7 +10,33 @@ import Team_url
 
 
 #loop for the each team's page to get the data
-team_basic = []
+
+out = open('team_basicInfo.csv','w')
+team_info = csv.writer(out,delimiter = ",")
+
+
+
+for url in Team_url.team_url[0:1]:
+	teamUrl = import_url.urlStarting+url[0]
+	
+	urlHandle = urllib.urlopen(teamUrl)
+	html = urlHandle.read()
+	soup = bs4.BeautifulSoup(html,"html.parser")
+
+	divAll = soup.find_all("div",{"class" : "mobile_text"})
+	for div in divAll:
+		text = div.find_all('span')
+		team_basic = []
+		for tx in text:
+			team_basic.append(tx.get_text().encode('utf8'))
+		
+        team_info.writerow(team_basic)
+		
+	
+	#set the time break to prevent the malfunction of the other access
+
+	time.sleep(1)
+
 
 for url in Team_url.team_url:
 	teamUrl = import_url.urlStarting+url[0]
@@ -21,7 +47,12 @@ for url in Team_url.team_url:
 
 	divAll = soup.find_all("div",{"class" : "mobile_text"})
 	for div in divAll:
-		team_basic.append(div.get_text().encode('utf8'))
+		
+		
+		tx = re.findall('</span> (.*?)\n',str(div))
+		
+        team_info.writerow(tx)
+		
 	
 	#set the time break to prevent the malfunction of the other access
 
@@ -54,9 +85,8 @@ for url in Team_url.team_url[0:1]:
 
 #writer the word data into the csv file
 
-with open("team_basicInfo.csv","w") as fp:
-	team_info = csv.writer(fp,delimiter = ",")
-	team_info.writerows(team_basic)
+	
+out.close()
 
 
 
