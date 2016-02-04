@@ -50,10 +50,16 @@ for url in Team_url.team_url:
 	
 	
 	for tr in trAll:
+
 		team_data = []
 		td = tr.find_all('td')
+		
+		if td == []:
+			continue
+		
 		for t in td:
 			team_data.append(t.get_text().encode('utf8'))
+		
 		team_info.writerow(team_data)
 	
 	#set the time break to prevent the malfunction of the other access
