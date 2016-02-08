@@ -32,9 +32,14 @@ for li in lis:
 
 		href = re.findall('href="/(.*)">',str(ur))
 		player_url.append(href[0])
-
+'''
+player_url_2 = []
+for ur in player_url:
+	url = import_url.urlStarting+ur
+	player_url_2.append(url)
+'''
 #check the result
-#print(player_url)
+#print(player_url_2)
 stop = timeit.default_timer()
 
 print stop - start

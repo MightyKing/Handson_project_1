@@ -54,7 +54,7 @@ for url_lower in Player_url.player_url:
 	time.sleep(1)
 #check the result
 
-#print(player_dic)
+print(player_dic["1"][0])
 
 	
 	
